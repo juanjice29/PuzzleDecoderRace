@@ -10,7 +10,7 @@ class Solver:
         self.checker =Checker()
         self.start_time = time.time()
         self.completed = False
-        self.paralell_requests = 10
+        self.paralell_requests = 5
         #self.found_ids = set()
 
     async def get_fragment(self, frag, id):

@@ -4,16 +4,19 @@ from collections import defaultdict
 class Checker:
     def __init__(self):
         self.fragmentos = defaultdict(str)
-        self.indices_encontrados = set()
+        #self.indices_encontrados = set()
     
     def add_pieza(self, index, text):
         if index not in self.fragmentos:
             self.fragmentos[index] = text
-            self.indices_encontrados.add(index)
+            #self.indices_encontrados.add(index)
             return True
         return False
 
     def check(self):
+        #print("llaves : ",max(self.fragmentos.keys()))
+        #print("indices : ",self.indices_encontrados)
+        #print(self.fragmentos)
         if not self.fragmentos:
             return False
         
