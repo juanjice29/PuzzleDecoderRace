@@ -4,5 +4,5 @@ venv/
 *.pyc
 __pycache__/
 
-/first_approach.py
+first_approach.py
 __pycache__/
