@@ -11,6 +11,7 @@ class Solver:
         self.start_time = time.time()
         self.completed = False
         self.paralell_requests = 10
+        self.found_ids = set()
 
     async def get_fragment(self, frag, id):
         if self.completed:
@@ -34,13 +35,15 @@ class Solver:
                 for id in range(current_id, current_id + self.paralell_requests):
                     task = asyncio.create_task(self.get_fragment(fragment, id))
                     tasks.append(task)
+                print("piezas a solicitar"+ str(current_id) + " a " + str(current_id + self.paralell_requests - 1))
                 await asyncio.gather(*tasks)
 
                 if not self.completed:
                     current_id += self.paralell_requests
-                
+                    if current_id > max(self.found_ids, default=0) + self.paralell_requests:
+                        self.paralell_requests = min(self.paralell_requests * 2, 50)
 
-    def print_solver(self):
+    async def print_solver(self):
         end_time = time.time()
         total_time = end_time - self.start_time
         
@@ -51,4 +54,5 @@ class Solver:
         
         if total_time < 1.0:
             print("Bonus")
-        
+
+

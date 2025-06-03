@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import random
 from time import sleep
 from threading import Lock
@@ -17,15 +17,22 @@ def get_fragment():
     # Simular delay aleatorio
     sleep(random.uniform(0.1, 0.4))
     
+    requested_id = request.args.get('id', type=int)
+    
     with lock:
-        # Escoger un fragmento aleatorio que no se haya enviado aún
-        available_ids = [id for id in FRAGMENTS_DICT if FRAGMENTS_DICT[id] is not None]
-        if not available_ids:
-            return jsonify({"error": "No hay más fragmentos disponibles"}), 404
-        
-        fragment_id = random.choice(available_ids)
-        response = FRAGMENTS_DICT[fragment_id]
-        FRAGMENTS_DICT[fragment_id] = None  # Marcar como enviado
+        if requested_id and requested_id in FRAGMENTS_DICT and FRAGMENTS_DICT[requested_id] is not None:
+            # Si se solicita un ID específico y está disponible
+            response = FRAGMENTS_DICT[requested_id]
+            FRAGMENTS_DICT[requested_id] = None
+        else:
+            # Devolver cualquier fragmento disponible
+            available_ids = [id for id in FRAGMENTS_DICT if FRAGMENTS_DICT[id] is not None]
+            if not available_ids:
+                return jsonify({"error": "No hay más fragmentos disponibles"}), 404
+            
+            fragment_id = random.choice(available_ids)
+            response = FRAGMENTS_DICT[fragment_id]
+            FRAGMENTS_DICT[fragment_id] = None
     
     return jsonify(response)
 

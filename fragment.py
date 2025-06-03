@@ -17,9 +17,14 @@ class Fragment:
     async def get(self, id):
         try:
             async with self.session.get(f"{self.config.BASE_URL}{id}") as response:
-                if response.status == 200:
+                 if response.status == 200:
                     return await response.json()
-                return None
+                 elif response.status == 404:
+                    print(f"Fragmento {id} no existe")
+                    return None
+                 else:
+                    print(f"Error inesperado con fragmento {id}: {response.status}")
+                    return None
         except Exception as e:
             print(f"error{id}: {e}")
             return None

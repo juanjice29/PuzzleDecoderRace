@@ -2,7 +2,7 @@
 from collections import defaultdict
 
 class Checker:
-    def __init__(self, name: str):
+    def __init__(self):
         self.fragmentos = defaultdict(str)
         self.indices_encontrados = set()
     
