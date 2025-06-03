@@ -11,7 +11,7 @@ class Solver:
         self.start_time = time.time()
         self.completed = False
         self.paralell_requests = 10
-        self.found_ids = set()
+        #self.found_ids = set()
 
     async def get_fragment(self, frag, id):
         if self.completed:
