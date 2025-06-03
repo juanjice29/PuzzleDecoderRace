@@ -22,6 +22,6 @@ class Checker:
     
     def armar(self):
         srtd_fragmentos = [self.fragmentos[i] for i in sorted(self.fragmentos.keys())]
-        return ''.join(srtd_fragmentos)
+        return ' '.join(srtd_fragmentos)
 
    

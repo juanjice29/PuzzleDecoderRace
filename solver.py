@@ -40,7 +40,7 @@ class Solver:
 
                 if not self.completed:
                     current_id += self.paralell_requests
-                    if current_id > max(self.found_ids, default=0) + self.paralell_requests:
+                    if current_id > self.paralell_requests:
                         self.paralell_requests = min(self.paralell_requests * 2, 50)
 
     async def print_solver(self):
